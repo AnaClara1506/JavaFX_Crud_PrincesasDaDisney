@@ -23,9 +23,9 @@ public class PrincesasDaDisneyDAO {
         try{
             ps = c.prepareStatement(sql);
             ps.setString(1, princesa.getNome());
-            ps.setString(2, princesa.getCor_vestido());
-            ps.setString(3, princesa.getNome_filme());
-            ps.setInt(4, princesa.getAno_filme());
+            ps.setString(2, princesa.getCorVestido());
+            ps.setString(3, princesa.getNomeFilme());
+            ps.setInt(4, princesa.getAnoFilme());
             ps.execute();
         } catch (SQLException e){
             e.printStackTrace();
@@ -40,7 +40,7 @@ public class PrincesasDaDisneyDAO {
         }
     }
 
-    public ArrayList<PrincesasDaDisneyDTO> selecionarPrincesa(){
+    public ArrayList<PrincesasDaDisneyDTO> visualizarPrincesa(){
         String sql = "select * from princesas_da_disney";
         try (Connection c = new Conexao().conectaBD(); PreparedStatement ps = c.prepareStatement(sql); ResultSet rs = ps.executeQuery();){
             while(rs.next())
@@ -48,9 +48,9 @@ public class PrincesasDaDisneyDAO {
                PrincesasDaDisneyDTO princesa = new PrincesasDaDisneyDTO();
                princesa.setId(rs.getInt("id"));
                princesa.setNome(rs.getString("nome"));
-               princesa.setCor_vestido(rs.getString("cor_vestido"));
-               princesa.setNome_filme(rs.getString("nome_filme"));
-               princesa.setAno_filme(rs.getInt("ano_filme"));
+               princesa.setCorVestido(rs.getString("cor_vestido"));
+               princesa.setNomeFilme(rs.getString("nome_filme"));
+               princesa.setAnoFilme(rs.getInt("ano_filme"));
                listaPrincesas.add(princesa);
             }
         }
@@ -66,9 +66,9 @@ public class PrincesasDaDisneyDAO {
 
         try (Connection c = new Conexao().conectaBD();PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, princesa.getNome());
-            ps.setString(2, princesa.getCor_vestido());
-            ps.setString(3, princesa.getNome_filme());
-            ps.setInt(4, princesa.getAno_filme());
+            ps.setString(2, princesa.getCorVestido());
+            ps.setString(3, princesa.getNomeFilme());
+            ps.setInt(4, princesa.getAnoFilme());
             ps.setInt(5, princesa.getId());
             ps.executeUpdate();
         } catch (SQLException ex){

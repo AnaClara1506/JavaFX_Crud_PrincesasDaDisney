@@ -23,27 +23,27 @@ public class PrincesasDaDisneyDTO {
         this.nome = nome;
     }
 
-    public String getCor_vestido() {
+    public String getCorVestido() {
         return cor_vestido;
     }
 
-    public void setCor_vestido(String cor_vestido) {
+    public void setCorVestido(String cor_vestido) {
         this.cor_vestido = cor_vestido;
     }
 
-    public String getNome_filme() {
+    public String getNomeFilme() {
         return nome_filme;
     }
 
-    public void setNome_filme(String nome_filme) {
+    public void setNomeFilme(String nome_filme) {
         this.nome_filme = nome_filme;
     }
 
-    public int getAno_filme() {
+    public int getAnoFilme() {
         return ano_filme;
     }
 
-    public void setAno_filme(int ano_filme) {
+    public void setAnoFilme(int ano_filme) {
         this.ano_filme = ano_filme;
     }
 }
