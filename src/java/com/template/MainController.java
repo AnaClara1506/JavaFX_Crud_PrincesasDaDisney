@@ -92,14 +92,14 @@ public class MainController
             String nome_filme = txtNomeFilme.getText();
             int ano_filme = Integer.parseInt(txtAnoFilme.getText());
 
-            PrincesasDaDisneyDTO objsaudedto = new PrincesasDaDisneyDTO();
-            objsaudedto.setNome(nome);
-            objsaudedto.setCorVestido(cor_vestido);
-            objsaudedto.setNomeFilme(nome_filme);
-            objsaudedto.setAnoFilme(ano_filme);
+            PrincesasDaDisneyDTO princesaDto = new PrincesasDaDisneyDTO();
+            princesaDto.setNome(nome);
+            princesaDto.setCorVestido(cor_vestido);
+            princesaDto.setNomeFilme(nome_filme);
+            princesaDto.setAnoFilme(ano_filme);
 
-            PrincesasDaDisneyDAO objsaudedao = new PrincesasDaDisneyDAO();
-            objsaudedao.cadastrarPrincesa(objsaudedto);
+            PrincesasDaDisneyDAO princesaDao = new PrincesasDaDisneyDAO();
+            princesaDao.cadastrarPrincesa(princesaDto);
 
             carregarPrincesas();
         }
@@ -152,8 +152,8 @@ public class MainController
     private void btnDeletarAction(ActionEvent event) {
         PrincesasDaDisneyDTO princesaSelecionada = tblPrincesasDaDisney.getSelectionModel().getSelectedItem();
         if (princesaSelecionada != null) {
-            PrincesasDaDisneyDAO tourDao = new PrincesasDaDisneyDAO();
-            tourDao.excluirPrincesa(princesaSelecionada.getId());
+            PrincesasDaDisneyDAO princesaDao = new PrincesasDaDisneyDAO();
+            princesaDao.excluirPrincesa(princesaSelecionada.getId());
 
             carregarPrincesas();
         }
