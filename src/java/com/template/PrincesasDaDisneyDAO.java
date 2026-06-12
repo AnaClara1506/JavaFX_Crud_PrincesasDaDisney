@@ -18,25 +18,17 @@ public class PrincesasDaDisneyDAO {
 
     public void cadastrarPrincesa(PrincesasDaDisneyDTO princesa){
         String sql = "INSERT INTO princesas_da_disney (nome, cor_vestido, nome_filme, ano_filme) VALUES (?, ?, ?, ?)";
-        ps = null;
-        c = new Conexao().conectaBD();
-        try{
-            ps = c.prepareStatement(sql);
+
+        try (Connection c = new Conexao().conectaBD();
+             PreparedStatement ps = c.prepareStatement(sql)) {
             ps.setString(1, princesa.getNome());
             ps.setString(2, princesa.getCorVestido());
             ps.setString(3, princesa.getNomeFilme());
             ps.setInt(4, princesa.getAnoFilme());
-            ps.execute();
-        } catch (SQLException e){
+            ps.executeUpdate();
+
+        } catch (SQLException e) {   //verificação de possíveis erros de conexão usando SQLException
             e.printStackTrace();
-        }
-        finally{
-            try {
-                if(ps!= null) ps.close();
-                if(c != null) c.close();
-            } catch (SQLException ex){
-                Logger.getLogger(PrincesasDaDisneyDAO.class.getName()).log(Level.SEVERE, null, ex);
-            }
         }
     }
 
