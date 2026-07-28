@@ -11,6 +11,8 @@ import java.util.ArrayList;
 import java.util.logging.Logger;
 import java.util.logging.Level;
 
+import static com.template.util.DialogUtil.*;
+
 public class PrincesasDaDisneyDAO {
     Connection c;
     PreparedStatement ps;
@@ -31,7 +33,8 @@ public class PrincesasDaDisneyDAO {
             ps.executeUpdate();
 
         } catch (SQLException e) {   //verificação de possíveis erros de conexão usando SQLException
-            e.printStackTrace();
+            Logger.getLogger(PrincesasDaDisneyDAO.class.getName()).log(Level.SEVERE, "Erro ao cadastrar princesa", e);
+            showError("Erro ao cadastrar princesa");
         }
     }
 
@@ -51,6 +54,7 @@ public class PrincesasDaDisneyDAO {
         }
         catch (SQLException ex){
             Logger.getLogger(PrincesasDaDisneyDAO.class.getName()).log(Level.SEVERE, "Erro ao listar princesa", ex);
+            showError("Erro ao listar princesa");
         }
 
         return listaPrincesas;
@@ -67,7 +71,8 @@ public class PrincesasDaDisneyDAO {
             ps.setInt(5, princesa.getId());
             ps.executeUpdate();
         } catch (SQLException ex){
-            Logger.getLogger(PrincesasDaDisneyDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrincesasDaDisneyDAO.class.getName()).log(Level.SEVERE, "Erro ao atualizar princesa", ex);
+            showError("Erro ao atualizar princesa");
         }
     }
 
@@ -78,7 +83,8 @@ public class PrincesasDaDisneyDAO {
             ps.setInt(1, id);
             ps.executeUpdate();
         } catch (SQLException ex){
-            Logger.getLogger(PrincesasDaDisneyDAO.class.getName()).log(Level.SEVERE, null, ex);
+            Logger.getLogger(PrincesasDaDisneyDAO.class.getName()).log(Level.SEVERE, "Erro ao excluir princesa", ex);
+            showError("Erro ao excluir princesa");
         }
     }
 }

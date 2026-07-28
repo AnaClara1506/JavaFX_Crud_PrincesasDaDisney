@@ -10,7 +10,7 @@ import javafx.scene.control.TableColumn;
 import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
-
+import static com.template.util.DialogUtil.*;
 import java.util.ArrayList;
 
 
@@ -104,6 +104,8 @@ public class MainController
             princesaDAO.cadastrarPrincesa(princesaDTO);
 
             carregarPrincesas();
+
+            showInfo("Princesa salva com sucesso");
         }
     }
     @FXML
@@ -147,6 +149,8 @@ public class MainController
                 princesasDAO.atualizarPrincesa(princesasDTO);
 
                 carregarPrincesas();
+
+                showInfo("Princesa atualizada com sucesso");
             }
         }
     }
@@ -158,6 +162,8 @@ public class MainController
             princesaDAO.excluirPrincesa(princesaSelecionada.getId());
 
             carregarPrincesas();
+
+            showInfo("Princesa excluída com sucesso");
         }
     }
 
