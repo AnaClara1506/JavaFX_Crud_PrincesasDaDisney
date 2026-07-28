@@ -1,5 +1,7 @@
-package com.template;
+package com.template.controller;
 
+import com.template.model.dao.PrincesasDaDisneyDAO;
+import com.template.model.dto.PrincesasDaDisneyDTO;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -92,14 +94,14 @@ public class MainController
             String nome_filme = txtNomeFilme.getText();
             int ano_filme = Integer.parseInt(txtAnoFilme.getText());
 
-            PrincesasDaDisneyDTO princesaDto = new PrincesasDaDisneyDTO();
-            princesaDto.setNome(nome);
-            princesaDto.setCorVestido(cor_vestido);
-            princesaDto.setNomeFilme(nome_filme);
-            princesaDto.setAnoFilme(ano_filme);
+            PrincesasDaDisneyDTO princesaDTO = new PrincesasDaDisneyDTO();
+            princesaDTO.setNome(nome);
+            princesaDTO.setCorVestido(cor_vestido);
+            princesaDTO.setNomeFilme(nome_filme);
+            princesaDTO.setAnoFilme(ano_filme);
 
-            PrincesasDaDisneyDAO princesaDao = new PrincesasDaDisneyDAO();
-            princesaDao.cadastrarPrincesa(princesaDto);
+            PrincesasDaDisneyDAO princesaDAO = new PrincesasDaDisneyDAO();
+            princesaDAO.cadastrarPrincesa(princesaDTO);
 
             carregarPrincesas();
         }
@@ -115,14 +117,14 @@ public class MainController
 
     @FXML
     private void carregarCampos() {
-        PrincesasDaDisneyDTO princesaDto = tblPrincesasDaDisney.getSelectionModel().getSelectedItem();
+        PrincesasDaDisneyDTO princesaDTO = tblPrincesasDaDisney.getSelectionModel().getSelectedItem();
 
-        if (princesaDto != null) {
-            txtID.setText(String.valueOf(princesaDto.getId()));
-            txtNome.setText(princesaDto.getNome());
-            txtCorVestido.setText(princesaDto.getCorVestido());
-            txtNomeFilme.setText(princesaDto.getNomeFilme());
-            txtAnoFilme.setText(String.valueOf(princesaDto.getAnoFilme()));
+        if (princesaDTO != null) {
+            txtID.setText(String.valueOf(princesaDTO.getId()));
+            txtNome.setText(princesaDTO.getNome());
+            txtCorVestido.setText(princesaDTO.getCorVestido());
+            txtNomeFilme.setText(princesaDTO.getNomeFilme());
+            txtAnoFilme.setText(String.valueOf(princesaDTO.getAnoFilme()));
         }
     }
 
@@ -132,17 +134,17 @@ public class MainController
             PrincesasDaDisneyDTO princesaSelecionada = tblPrincesasDaDisney.getSelectionModel().getSelectedItem();
 
             if (princesaSelecionada != null) {
-                PrincesasDaDisneyDTO princesasDto = new PrincesasDaDisneyDTO();
+                PrincesasDaDisneyDTO princesasDTO = new PrincesasDaDisneyDTO();
 
-                princesasDto.setId(princesaSelecionada.getId());
-                princesasDto.setNome(txtNome.getText());
-                princesasDto.setCorVestido(txtCorVestido.getText());
-                princesasDto.setNomeFilme(txtNomeFilme.getText());
-                princesasDto.setAnoFilme(Integer.parseInt(txtAnoFilme.getText()));
+                princesasDTO.setId(princesaSelecionada.getId());
+                princesasDTO.setNome(txtNome.getText());
+                princesasDTO.setCorVestido(txtCorVestido.getText());
+                princesasDTO.setNomeFilme(txtNomeFilme.getText());
+                princesasDTO.setAnoFilme(Integer.parseInt(txtAnoFilme.getText()));
 
-                PrincesasDaDisneyDAO princesasDao = new PrincesasDaDisneyDAO();
+                PrincesasDaDisneyDAO princesasDAO = new PrincesasDaDisneyDAO();
 
-                princesasDao.atualizarPrincesa(princesasDto);
+                princesasDAO.atualizarPrincesa(princesasDTO);
 
                 carregarPrincesas();
             }
@@ -152,8 +154,8 @@ public class MainController
     private void btnDeletarAction(ActionEvent event) {
         PrincesasDaDisneyDTO princesaSelecionada = tblPrincesasDaDisney.getSelectionModel().getSelectedItem();
         if (princesaSelecionada != null) {
-            PrincesasDaDisneyDAO princesaDao = new PrincesasDaDisneyDAO();
-            princesaDao.excluirPrincesa(princesaSelecionada.getId());
+            PrincesasDaDisneyDAO princesaDAO = new PrincesasDaDisneyDAO();
+            princesaDAO.excluirPrincesa(princesaSelecionada.getId());
 
             carregarPrincesas();
         }
