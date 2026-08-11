@@ -11,6 +11,8 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import static com.template.util.DialogUtil.*;
+import static com.template.validator.PrincesaDaDisneyValidator.validarPrincesa;
+
 import java.util.ArrayList;
 
 
@@ -31,12 +33,14 @@ public class MainController
     @FXML private TableColumn<PrincesasDaDisneyDTO, Integer> colAnoFilme;
 
     private boolean conferenciaDados() {
-        if (txtNome.getText().trim().isEmpty() ||
-                txtCorVestido.getText().trim().isEmpty() ||
-                txtNomeFilme.getText().trim().isEmpty() ||
-                txtAnoFilme.getText().trim().isEmpty()) {
+        //validar campo de pesquisa
+        String nome = txtNome.getText().trim();
+        String cor_vestido = txtCorVestido.getText().trim();
+        String nome_filme = txtNomeFilme.getText().trim();
+        String ano_filme = txtAnoFilme.getText().trim();
 
-            lblErro.setText("Por favor, preencha todos os campos obrigatórios!");
+        if(validarPrincesa(nome, cor_vestido, nome_filme, ano_filme)){
+            lblErro.setText("Preencha todos os campos!");
             return false;
         }
 
