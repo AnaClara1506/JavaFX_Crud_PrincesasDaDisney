@@ -2,7 +2,7 @@
   <configuration default="false" name="Java FX 25 Run" type="Application" factoryName="Application">
     <option name="MAIN_CLASS_NAME" value="com.template.Main" />
     <module name="Template" />
-    <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\ra2457016\javafx-sdk-26.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml" />
+    <option name="VM_PARAMETERS" value="--module-path &quot;C:\Users\anacl\javafx-sdk-26.0.2\lib&quot; --add-modules javafx.controls,javafx.fxml" />
     <method v="2">
       <option name="Make" enabled="true" />
     </method>

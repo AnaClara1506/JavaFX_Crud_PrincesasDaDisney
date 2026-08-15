@@ -2,6 +2,7 @@ package com.template.controller;
 
 import com.template.model.dao.PrincesasDaDisneyDAO;
 import com.template.model.dto.PrincesasDaDisneyDTO;
+import com.template.service.PrincesaService;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -11,7 +12,7 @@ import javafx.scene.control.TableView;
 import javafx.scene.control.TextField;
 import javafx.scene.control.cell.PropertyValueFactory;
 import static com.template.util.DialogUtil.*;
-import static com.template.validator.PrincesaDaDisneyValidator.validarPrincesa;
+import static com.template.validator.PrincesaDaDisneyValidator.*;
 
 import java.util.ArrayList;
 
@@ -34,84 +35,52 @@ public class MainController
 
     private boolean conferenciaDados() {
         //validar campo de pesquisa
-        String nome = txtNome.getText().trim();
-        String cor_vestido = txtCorVestido.getText().trim();
-        String nome_filme = txtNomeFilme.getText().trim();
-        String ano_filme = txtAnoFilme.getText().trim();
-
-        if(validarPrincesa(nome, cor_vestido, nome_filme, ano_filme)){
-            lblErro.setText("Preencha todos os campos!");
+        String erro = validarPrincesa(txtNome.getText().trim(), txtCorVestido.getText().trim(), txtNomeFilme.getText().trim(), txtAnoFilme.getText().trim());
+        if(erro != null) {
+            lblErro.setText(erro);
             return false;
         }
-
-        try {
-            Integer.parseInt(txtNome.getText().trim());
-            lblErro.setText("O campo 'Nome' deve conter um texto");
-            return false;
-        } catch (NumberFormatException e) {
-        }
-
-        try {
-            Integer.parseInt(txtCorVestido.getText().trim());
-            lblErro.setText("O campo 'Cor do Vestido' deve conter um texto");
-            return false;
-        } catch (NumberFormatException e) {
-        }
-
-        try {
-            Integer.parseInt(txtNomeFilme.getText().trim());
-            lblErro.setText("O campo 'Nome do Filme' deve conter um texto");
-            return false;
-        } catch (NumberFormatException e) {
-        }
-
-        try {
-            int ano = Integer.parseInt(txtAnoFilme.getText().trim());
-            if (ano < 1937 || ano > 2026) {
-                lblErro.setText("Por favor, digite um ano válido entre 1937 (primeiro filme) e 2026.");
-                return false;
-            }
-        } catch (NumberFormatException e) {
-            lblErro.setText("O campo 'Ano do Filme' deve conter apenas números.");
-            return false;
-        }
-
         lblErro.setText("");
         return true;
     }
 
     @FXML
     private void carregarPrincesas(){
-        PrincesasDaDisneyDAO objPrincesasDAO = new PrincesasDaDisneyDAO();
-        ArrayList<PrincesasDaDisneyDTO> listaPrincesas = objPrincesasDAO.visualizarPrincesa();
-        tblPrincesasDaDisney.setItems(FXCollections.observableArrayList(listaPrincesas));
-
+        tblPrincesasDaDisney.setItems(FXCollections.observableArrayList(PrincesaService.listarPrincesas()));
         limparCampos();
     }
-
 
     @FXML
     private void btnSalvarAction(ActionEvent event){
         if(conferenciaDados()) {
-            String nome = txtNome.getText();
-            String cor_vestido = txtCorVestido.getText();
-            String nome_filme = txtNomeFilme.getText();
-            int ano_filme = Integer.parseInt(txtAnoFilme.getText());
-
-            PrincesasDaDisneyDTO princesaDTO = new PrincesasDaDisneyDTO();
-            princesaDTO.setNome(nome);
-            princesaDTO.setCorVestido(cor_vestido);
-            princesaDTO.setNomeFilme(nome_filme);
-            princesaDTO.setAnoFilme(ano_filme);
-
-            PrincesasDaDisneyDAO princesaDAO = new PrincesasDaDisneyDAO();
-            princesaDAO.cadastrarPrincesa(princesaDTO);
-
+            PrincesasDaDisneyDTO princesaDTO = criarPrincesaDTO(null);
+            PrincesaService.salvarPrincesa(princesaDTO);
             carregarPrincesas();
-
             showInfo("Princesa salva com sucesso");
         }
     }
+
+
+    @FXML
+    private void btnAtualizarAction(ActionEvent event) {
+        PrincesasDaDisneyDTO princesaSelecionada = tblPrincesasDaDisney.getSelectionModel().getSelectedItem();
+        if (princesaSelecionada != null && conferenciaDados()) {
+            PrincesasDaDisneyDTO princesaDTO = criarPrincesaDTO(princesaSelecionada.getId());
+            PrincesaService.atualizarPrincesa(princesaDTO);
+            carregarPrincesas();
+            showInfo("Princesa atualizada com sucesso");
+        }
+    }
+    @FXML
+    private void btnDeletarAction(ActionEvent event) {
+        PrincesasDaDisneyDTO princesaSelecionada = tblPrincesasDaDisney.getSelectionModel().getSelectedItem();
+        if (princesaSelecionada != null) {
+            PrincesaService.excluirPrincesa(princesaSelecionada.getId());
+            carregarPrincesas();
+            showInfo("Princesa excluída com sucesso");
+        }
+    }
+
     @FXML
     private void btnLimparAction(ActionEvent event){
         txtID.clear();
@@ -135,49 +104,24 @@ public class MainController
     }
 
     @FXML
-    private void btnAtualizarAction(ActionEvent event) {
-        if(conferenciaDados()) {
-            PrincesasDaDisneyDTO princesaSelecionada = tblPrincesasDaDisney.getSelectionModel().getSelectedItem();
-
-            if (princesaSelecionada != null) {
-                PrincesasDaDisneyDTO princesasDTO = new PrincesasDaDisneyDTO();
-
-                princesasDTO.setId(princesaSelecionada.getId());
-                princesasDTO.setNome(txtNome.getText());
-                princesasDTO.setCorVestido(txtCorVestido.getText());
-                princesasDTO.setNomeFilme(txtNomeFilme.getText());
-                princesasDTO.setAnoFilme(Integer.parseInt(txtAnoFilme.getText()));
-
-                PrincesasDaDisneyDAO princesasDAO = new PrincesasDaDisneyDAO();
-
-                princesasDAO.atualizarPrincesa(princesasDTO);
-
-                carregarPrincesas();
-
-                showInfo("Princesa atualizada com sucesso");
-            }
-        }
-    }
-    @FXML
-    private void btnDeletarAction(ActionEvent event) {
-        PrincesasDaDisneyDTO princesaSelecionada = tblPrincesasDaDisney.getSelectionModel().getSelectedItem();
-        if (princesaSelecionada != null) {
-            PrincesasDaDisneyDAO princesaDAO = new PrincesasDaDisneyDAO();
-            princesaDAO.excluirPrincesa(princesaSelecionada.getId());
-
-            carregarPrincesas();
-
-            showInfo("Princesa excluída com sucesso");
-        }
-    }
-
-    @FXML
     private void limparCampos() {
         txtID.setText("");
         txtNome.setText("");
         txtCorVestido.setText("");
         txtNomeFilme.setText("");
         txtAnoFilme.setText("");
+    }
+
+    private PrincesasDaDisneyDTO criarPrincesaDTO(Integer id){
+        //Metodo de criação do DTO
+        PrincesasDaDisneyDTO princesaDTO = new PrincesasDaDisneyDTO();
+        if (id != null) princesaDTO.setId(id);
+        princesaDTO.setNome(txtNome.getText());
+        princesaDTO.setCorVestido(txtCorVestido.getText());
+        princesaDTO.setNomeFilme(txtNomeFilme.getText());
+        princesaDTO.setAnoFilme(Integer.parseInt(txtAnoFilme.getText()));
+
+        return princesaDTO;
     }
 
     //Etiquetas para valores das colunas
