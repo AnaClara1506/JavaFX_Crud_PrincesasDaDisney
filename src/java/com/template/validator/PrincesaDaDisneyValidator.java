@@ -27,7 +27,7 @@ public class PrincesaDaDisneyValidator {
         try {
             int ano = Integer.parseInt(ano_filme);
             if (ano < 1937 || ano > 2026) {
-                return "O ano do filme deve estar entre 1937 e 2026";
+                return "O ano do filme deve estar en]'tre 1937 e 2026";
             }
         } catch (NumberFormatException e) {
             return "O ano do filme deve conter apenas números";

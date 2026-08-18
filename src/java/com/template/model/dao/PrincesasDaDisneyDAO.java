@@ -14,12 +14,7 @@ import java.util.logging.Level;
 import static com.template.util.DialogUtil.*;
 
 public class PrincesasDaDisneyDAO {
-    Connection c;
-    PreparedStatement ps;
-    ResultSet rs;
     private static Logger logger = Logger.getLogger(PrincesasDaDisneyDAO.class.getName());
-
-    ArrayList<PrincesasDaDisneyDTO> listaPrincesas = new ArrayList<>();
 
     public void cadastrarPrincesa(PrincesasDaDisneyDTO princesa){
         String sql = "INSERT INTO princesas_da_disney (nome, cor_vestido, nome_filme, ano_filme) VALUES (?, ?, ?, ?)";
@@ -39,6 +34,7 @@ public class PrincesasDaDisneyDAO {
     }
 
     public ArrayList<PrincesasDaDisneyDTO> visualizarPrincesa(){
+        ArrayList<PrincesasDaDisneyDTO> listaPrincesas = new ArrayList<>();
         String sql = "select * from princesas_da_disney";
         try (Connection c = new Conexao().conectaBD(); PreparedStatement ps = c.prepareStatement(sql); ResultSet rs = ps.executeQuery();){
             while(rs.next())

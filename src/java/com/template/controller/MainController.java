@@ -34,7 +34,7 @@ public class MainController
     @FXML private TableColumn<PrincesasDaDisneyDTO, Integer> colAnoFilme;
 
     private boolean conferenciaDados() {
-        //validar campo de pesquisa
+        //validar campos de pesquisa
         String erro = validarPrincesa(txtNome.getText().trim(), txtCorVestido.getText().trim(), txtNomeFilme.getText().trim(), txtAnoFilme.getText().trim());
         if(erro != null) {
             lblErro.setText(erro);
