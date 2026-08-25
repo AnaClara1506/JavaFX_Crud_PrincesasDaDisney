@@ -1,38 +1,30 @@
 package com.template.validator;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class PrincesaDaDisneyValidator {
-    public static String validarPrincesa(String nome, String cor_vestido, String nome_filme, String ano_filme ){
-        if (nome.isEmpty() || cor_vestido.isEmpty() || nome_filme.isEmpty() || ano_filme.isEmpty()) {
-            return "Preencha todos os campos!";
-        }
 
-        try {
-            Integer.parseInt(nome);
-            return "O campo 'Nome' deve conter letras!";
-        } catch (NumberFormatException e) {
-        }
+    public static String validarPrincesa(String nome, String cor_vestido, String nome_filme, String ano_filme) {
 
-        try {
-            Integer.parseInt(cor_vestido);
-            return "O campo 'Cor do Vestido' deve conter letras!";
-        } catch (NumberFormatException e) {
-        }
+        List<Validator<String>> validators = new ArrayList<>();
 
-        try {
-            Integer.parseInt(nome_filme);
-            return "O campo 'Nome do filme' deve conter letras!";
-        } catch (NumberFormatException e) {
-        }
+        validators.add(new CampoObrigatorioValidator("Nome", nome));
+        validators.add(new CampoObrigatorioValidator("Cor do vestido", cor_vestido));
+        validators.add(new CampoObrigatorioValidator("Nome do filme", nome_filme));
+        validators.add(new CampoObrigatorioValidator("Ano do filme", ano_filme));
 
-        try {
-            int ano = Integer.parseInt(ano_filme);
-            if (ano < 1937 || ano > 2026) {
-                return "O ano do filme deve estar en]'tre 1937 e 2026";
+        validators.add(new TextValidator(nome));
+        validators.add(new TextValidator(cor_vestido));
+        validators.add(new TextValidator(nome_filme));
+        validators.add(new AnoValidator(ano_filme));
+
+        for (Validator<String> validator : validators) {
+            if (!validator.validar(validator.getValor())) {
+                return validator.getMensagemErro();
             }
-        } catch (NumberFormatException e) {
-            return "O ano do filme deve conter apenas números";
         }
 
-        return null;
+        return "";
     }
 }

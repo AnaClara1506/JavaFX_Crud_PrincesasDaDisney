@@ -4,6 +4,10 @@ public class TextValidator implements Validator<String>{
     private String valor;
     private String mensagemErro;
 
+    public TextValidator(String valor) {
+        this.valor = valor;
+    }
+
     @Override
     public boolean validar(String valor) {
         this.valor = valor;
@@ -17,7 +21,7 @@ public class TextValidator implements Validator<String>{
     }
 
     @Override
-    public String getMessagemErro() {
+    public String getMensagemErro() {
         return mensagemErro;
     }
 

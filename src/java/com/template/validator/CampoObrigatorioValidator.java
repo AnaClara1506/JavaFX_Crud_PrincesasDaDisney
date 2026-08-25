@@ -15,8 +15,8 @@ public class CampoObrigatorioValidator implements Validator<String>{
     }
 
     @Override
-    public String getMessagemErro() {
-        return "O campo" + nomeCampo + "deve ser preenchido";
+    public String getMensagemErro() {
+        return "O campo " + nomeCampo + " deve ser preenchido";
     }
 
     @Override
