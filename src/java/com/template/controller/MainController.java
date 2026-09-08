@@ -2,9 +2,7 @@ package com.template.controller;
 
 import com.template.model.dto.PrincesasDaDisneyDTO;
 import com.template.service.IPrincesaService;
-import com.template.service.PrincesaService;
 import com.template.validator.IPrincesaDaDisneyValidator;
-import com.template.validator.PrincesaDaDisneyValidator;
 import javafx.collections.FXCollections;
 import javafx.event.ActionEvent;
 import javafx.fxml.FXML;
@@ -32,12 +30,18 @@ public class MainController {
     @FXML private TableColumn<PrincesasDaDisneyDTO, String> colNomeFilme;
     @FXML private TableColumn<PrincesasDaDisneyDTO, Integer> colAnoFilme;
 
-    // Injeção / Instanciação baseada em Interfaces (DIP)
-    private final IPrincesaService princesaService = new PrincesaService();
-    private final IPrincesaDaDisneyValidator princesaValidator = new PrincesaDaDisneyValidator();
+    // Dependências abstraídas (DIP) - Sem "new" direto na classe
+    private final IPrincesaService princesaService;
+    private final IPrincesaDaDisneyValidator princesaValidador;
+
+    // Construtor utilizado pela ControllerFactory para Injeção de Dependência
+    public MainController(IPrincesaService princesaService, IPrincesaDaDisneyValidator princesaValidador) {
+        this.princesaService = princesaService;
+        this.princesaValidador = princesaValidador;
+    }
 
     private boolean conferenciaDados() {
-        String erro = princesaValidator.validarPrincesa(
+        String erro = princesaValidador.validarPrincesa(
                 txtNome.getText().trim(),
                 txtCorVestido.getText().trim(),
                 txtNomeFilme.getText().trim(),
@@ -64,7 +68,7 @@ public class MainController {
             PrincesasDaDisneyDTO princesaDTO = criarPrincesaDTO(null);
             princesaService.salvarPrincesa(princesaDTO);
             carregarPrincesas();
-            showInfo("Princesa salva com sucesso");
+            showInfo("Princesa salva com sucesso!");
         }
     }
 
@@ -75,7 +79,7 @@ public class MainController {
             PrincesasDaDisneyDTO princesaDTO = criarPrincesaDTO(princesaSelecionada.getId());
             princesaService.atualizarPrincesa(princesaDTO);
             carregarPrincesas();
-            showInfo("Princesa atualizada com sucesso");
+            showInfo("Princesa atualizada com sucesso!");
         }
     }
 
@@ -85,7 +89,7 @@ public class MainController {
         if (princesaSelecionada != null) {
             princesaService.excluirPrincesa(princesaSelecionada.getId());
             carregarPrincesas();
-            showInfo("Princesa excluída com sucesso");
+            showInfo("Princesa excluída com sucesso!");
         }
     }
 

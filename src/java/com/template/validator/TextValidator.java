@@ -10,15 +10,9 @@ public class TextValidator implements Validator<String> {
 
     @Override
     public boolean validar(String valor) {
-        String valorParaValidar = (valor != null) ? valor : this.valor;
 
-        if (valorParaValidar == null || valorParaValidar.trim().isEmpty()) {
-            this.mensagemErro = "O campo de texto não pode ser vazio";
-            return false;
-        }
-
-        if (!valorParaValidar.matches("^[\\p{L} ]+$")) {
-            this.mensagemErro = "O campo deve conter apenas letras e espaços";
+        if (!valor.matches("^[\\p{L} ]+$")) {
+            this.mensagemErro = "Alguns campos devem conter letras";
             return false;
         }
 
