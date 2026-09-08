@@ -11,7 +11,7 @@ public class CampoObrigatorioValidator implements Validator<String>{
 
     @Override
     public boolean validar(String valor) {
-        return this.valor !=null && this.valor.trim().isEmpty();
+        return this.valor !=null && !this.valor.trim().isEmpty();
     }
 
     @Override

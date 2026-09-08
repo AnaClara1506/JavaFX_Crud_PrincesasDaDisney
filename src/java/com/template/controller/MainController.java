@@ -36,7 +36,7 @@ public class MainController
     private boolean conferenciaDados() {
         //validar campos de pesquisa
         String erro = validarPrincesa(txtNome.getText().trim(), txtCorVestido.getText().trim(), txtNomeFilme.getText().trim(), txtAnoFilme.getText().trim());
-        if(erro != null) {
+        if(!erro.isEmpty()) {
             lblErro.setText(erro);
             return false;
         }

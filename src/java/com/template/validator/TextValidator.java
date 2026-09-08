@@ -13,7 +13,7 @@ public class TextValidator implements Validator<String>{
         this.valor = valor;
 
         if (!valor.matches("^[\\p{L} ]+$")) {
-            mensagemErro = "O campo deve conter apenas letras.";
+            mensagemErro = "Alguns campos devem conter letras.";
             return false;
         }
 
