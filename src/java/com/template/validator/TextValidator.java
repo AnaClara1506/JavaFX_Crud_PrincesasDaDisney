@@ -1,6 +1,6 @@
 package com.template.validator;
 
-public class TextValidator implements Validator<String>{
+public class TextValidator implements Validator<String> {
     private String valor;
     private String mensagemErro;
 
@@ -10,10 +10,15 @@ public class TextValidator implements Validator<String>{
 
     @Override
     public boolean validar(String valor) {
-        this.valor = valor;
+        String valorParaValidar = (valor != null) ? valor : this.valor;
 
-        if (!valor.matches("^[\\p{L} ]+$")) {
-            mensagemErro = "Alguns campos devem conter letras.";
+        if (valorParaValidar == null || valorParaValidar.trim().isEmpty()) {
+            this.mensagemErro = "O campo de texto não pode ser vazio";
+            return false;
+        }
+
+        if (!valorParaValidar.matches("^[\\p{L} ]+$")) {
+            this.mensagemErro = "O campo deve conter apenas letras e espaços";
             return false;
         }
 

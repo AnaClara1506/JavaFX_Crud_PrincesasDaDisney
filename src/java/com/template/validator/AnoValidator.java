@@ -1,10 +1,8 @@
 package com.template.validator;
 
-public class AnoValidator implements Validator<String>{
+public class AnoValidator implements Validator<String> {
     private String valor;
-    private int ano;
     private String mensagemErro;
-
 
     public AnoValidator(String valor) {
         this.valor = valor;
@@ -12,16 +10,22 @@ public class AnoValidator implements Validator<String>{
 
     @Override
     public boolean validar(String valor) {
-        this.valor = valor;
+        String valorParaValidar = (valor != null) ? valor : this.valor;
+
+        if (valorParaValidar == null || valorParaValidar.trim().isEmpty()) {
+            this.mensagemErro = "O ano do filme não pode ser vazio";
+            return false;
+        }
+
         try {
-           this.ano = Integer.parseInt(valor);
-            if (this.ano < 1937 || this.ano > 2026) {
-                mensagemErro = "O ano do filme deve estar entre 1937 e 2026";
+            int ano = Integer.parseInt(valorParaValidar.trim());
+            if (ano < 1937 || ano > 2026) {
+                this.mensagemErro = "O ano do filme deve estar entre 1937 e 2026";
                 return false;
             }
             return true;
         } catch (NumberFormatException e) {
-            mensagemErro = "O ano do filme deve conter apenas números";
+            this.mensagemErro = "O ano do filme deve conter apenas números";
             return false;
         }
     }
@@ -35,5 +39,4 @@ public class AnoValidator implements Validator<String>{
     public String getValor() {
         return valor;
     }
-
 }

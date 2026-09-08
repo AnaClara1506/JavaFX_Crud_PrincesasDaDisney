@@ -1,26 +1,40 @@
 package com.template.service;
 
+import com.template.model.dao.IPrincesasDaDisneyDAO;
 import com.template.model.dao.PrincesasDaDisneyDAO;
 import com.template.model.dto.PrincesasDaDisneyDTO;
 
 import java.util.ArrayList;
 
-public class PrincesaService {
-    private static PrincesasDaDisneyDAO princesaDAO = new PrincesasDaDisneyDAO();
+public class PrincesaService implements IPrincesaService {
 
-    public static ArrayList<PrincesasDaDisneyDTO> listarPrincesas() {
+    private final IPrincesasDaDisneyDAO princesaDAO;
+
+    public PrincesaService() {
+        this.princesaDAO = new PrincesasDaDisneyDAO();
+    }
+
+    public PrincesaService(IPrincesasDaDisneyDAO princesaDAO) {
+        this.princesaDAO = princesaDAO;
+    }
+
+    @Override
+    public void salvarPrincesa(PrincesasDaDisneyDTO princesa) {
+        princesaDAO.cadastrarPrincesa(princesa);
+    }
+
+    @Override
+    public ArrayList<PrincesasDaDisneyDTO> listarPrincesas() {
         return princesaDAO.visualizarPrincesa();
     }
 
-    public static void salvarPrincesa(PrincesasDaDisneyDTO princesaDTO) {
-        princesaDAO.cadastrarPrincesa(princesaDTO);
+    @Override
+    public void atualizarPrincesa(PrincesasDaDisneyDTO princesa) {
+        princesaDAO.atualizarPrincesa(princesa);
     }
 
-    public static void atualizarPrincesa(PrincesasDaDisneyDTO princesaDTO) {
-        princesaDAO.atualizarPrincesa(princesaDTO);
-    }
-
-    public static void excluirPrincesa(int id) {
+    @Override
+    public void excluirPrincesa(int id) {
         princesaDAO.excluirPrincesa(id);
     }
 }
