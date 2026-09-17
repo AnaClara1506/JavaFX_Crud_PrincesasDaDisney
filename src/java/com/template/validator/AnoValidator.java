@@ -12,11 +12,6 @@ public class AnoValidator implements Validator<String> {
     public boolean validar(String valor) {
         String valorParaValidar = (valor != null) ? valor : this.valor;
 
-        if (valorParaValidar == null || valorParaValidar.trim().isEmpty()) {
-            this.mensagemErro = "O ano do filme não pode ser vazio";
-            return false;
-        }
-
         try {
             int ano = Integer.parseInt(valorParaValidar.trim());
             if (ano < 1937 || ano > 2026) {
