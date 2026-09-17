@@ -30,11 +30,9 @@ public class MainController {
     @FXML private TableColumn<PrincesasDaDisneyDTO, String> colNomeFilme;
     @FXML private TableColumn<PrincesasDaDisneyDTO, Integer> colAnoFilme;
 
-    // Dependências abstraídas (DIP) - Sem "new" direto na classe
     private final IPrincesaService princesaService;
     private final IPrincesaDaDisneyValidator princesaValidador;
 
-    // Construtor utilizado pela ControllerFactory para Injeção de Dependência
     public MainController(IPrincesaService princesaService, IPrincesaDaDisneyValidator princesaValidador) {
         this.princesaService = princesaService;
         this.princesaValidador = princesaValidador;
