@@ -22,6 +22,6 @@ public class CampoObrigatorioValidator implements Validator<String> {
 
     @Override
     public String getValor() {
-        return valor; // Corrigido: antes retornava ""
+        return valor;
     }
 }
