@@ -8,8 +8,8 @@ import com.template.validator.PrincesaDaDisneyValidator;
 
 public class ControllerFactory {
 
-    public Object criarController(Class<?> clazz) {
-        if (clazz.equals(MainController.class)) {
+    public Object criarController(Class<?> controllerClass) {
+        if (controllerClass.equals(MainController.class)) {
             IPrincesaService service = new PrincesaService();
             IPrincesaDaDisneyValidator validador = new PrincesaDaDisneyValidator();
 
@@ -18,9 +18,9 @@ public class ControllerFactory {
         }
 
         try {
-            return clazz.getDeclaredConstructor().newInstance();
+            return controllerClass.getDeclaredConstructor().newInstance();
         } catch (Exception e) {
-            throw new RuntimeException("Erro ao criar controller: " + clazz.getName(), e);
+            throw new RuntimeException("Erro ao criar controller: " + controllerClass.getName(), e);
         }
     }
 }
